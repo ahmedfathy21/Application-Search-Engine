@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: job_pipeline_pgvector
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-pipeline_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pipeline_secret_pw}
+      POSTGRES_DB: ${POSTGRES_DB:-job_pipeline_db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/01-init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-pipeline_user} -d ${POSTGRES_DB:-job_pipeline_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgvector_data:
+    driver: local

@@ -1,0 +1,12 @@
+{
+  "directTargets": [],
+  "searchQueries": [
+    {
+      "keywords": "Backend Engineer TypeScript Node.js",
+      "location": "Remote",
+      "remoteOnly": true,
+      "maxResultsPerBoard": 5,
+      "platforms": ["linkedin", "wuzzuf", "remoteok", "weworkremotely", "ycombinator"]
+    }
+  ]
+}
